@@ -25,7 +25,8 @@
 
     <!-- TODOを追加するためのフォーム -->
     <form id="todoForm" class="todo-form">
-        <input type="text" id="todoInput" placeholder="新しいTODOを入力..." required>
+        <input type="text" id="todotitle" placeholder="タイトルを入力..." required>
+        <input type="text" id="todocontent" placeholder="メモを入力..." required>
         <button type="submit">追加</button>
     </form>
 
@@ -139,7 +140,7 @@
                 // フォームのデフォルトの送信動作を防止
                 e.preventDefault();
                 // 入力されたテキストを取得
-                const input = document.getElementById('todoInput');
+                const input = document.getElementById('todotitle');
                 const title = input.value.trim();
                 // テキストが入力されている場合のみTODOを追加
                 if (title) {
