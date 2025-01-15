@@ -95,7 +95,7 @@ def get_todo(todo_id: int):
             "SELECT * FROM todos WHERE id = ?", (todo_id,)).fetchone()
         if not todo:  # TODOが見つからない場合は404エラーを返す
             raise HTTPException(status_code=404, detail="Todo not found")
-        return {"id": todo[0], "title": todo[1], "content": bool(todo[2])}
+        return {"id": todo[0], "title": todo[1], "content": todo[2]}
 
 
 # 指定されたIDのTODOを更新するエンドポイント
