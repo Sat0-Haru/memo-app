@@ -62,10 +62,8 @@
         function renderTodo(todo) {
             return `
                 <li>
-                    <input type="checkbox" 
-                           ${todo.completed ? 'checked' : ''} 
-                           onchange="toggleTodo(${todo.id}, this.checked)">
-                    <span class="${todo.completed ? 'completed' : ''}">${todo.title}</span>
+                    <strong>${todo.todotitle}</strong>
+                    <p>${todo.todocontent}</p>
                     <button onclick="deleteTodo(${todo.id})">削除</button>
                 </li>
             `;
@@ -93,7 +91,7 @@
             await api(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, completed: false })
+                body: JSON.stringify({ title, content })
             });
             // リストを再読み込みして表示を更新
             loadTodos();
@@ -140,13 +138,20 @@
                 // フォームのデフォルトの送信動作を防止
                 e.preventDefault();
                 // 入力されたテキストを取得
-                const input = document.getElementById('todotitle');
-                const title = input.value.trim();
-                // テキストが入力されている場合のみTODOを追加
-                if (title) {
-                    addTodo(title);
+                const inputTitle = document.getElementById('todotitle'); // タイトルの入力要素
+                const inputContent = document.getElementById('todocontent'); // 内容の入力要素
+
+                const title = inputTitle.value.trim(); // タイトルの値を取得し、前後の空白を削除
+                const content = inputContent.value.trim(); // 内容の値を取得し、前後の空白を削除
+
+                // 両方の入力フィールドが空でない場合のみTODOを追加
+                if (title && content) {
+                    addTodo(title, content); // TODOを追加（タイトルと内容を渡す）
                     // 入力フィールドをクリア
-                    input.value = '';
+                    inputTitle.value = '';
+                    inputContent.value = '';
+                } else {
+                    alert('タイトルと内容を両方入力してください'); // 片方でも空ならエラーメッセージ
                 }
             });
         });
